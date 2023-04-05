@@ -1,0 +1,14 @@
+<div nxLayout="grid" class="nx-grid--max-width">
+  <div nxRow class="nx-margin-top-2m nx-margin-bottom-3m" nxRowJustify="center">
+    <nx-pagination
+      [nxCount]="count"
+      [nxPage]="page"
+      [nxPerPage]="perPage"
+      nxType="advanced"
+      (nxGoPrev)="prevPage()"
+      (nxGoNext)="nextPage()"
+      (nxGoPage)="goToPage($event)"
+    >
+    </nx-pagination>
+  </div>
+</div>

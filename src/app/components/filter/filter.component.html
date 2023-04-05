@@ -1,0 +1,25 @@
+<div nxLayout="grid" class="nx-grid--max-width nx-margin-top-s">
+  <div nxRow nxRowJustify="center">
+    <div nxCol="12, 12, 10, 8">
+      <div nxRow>
+        <div nxCol="12, 12, 6">
+          <h3>Filter:</h3>
+          <nx-formfield nxLabel="Style">
+            <nx-multi-select [options]="complexOptions" selectLabel="name" selectValue="id"></nx-multi-select>
+          </nx-formfield>
+        </div>
+
+        <div nxCol="12, 12, 6">
+          <h3>Sort by:</h3>
+          <nx-formfield nxLabel="Recommendation">
+            <nx-multi-select
+              [options]="complexOptions"
+              [selectLabel]="selectLabel"
+              [selectValue]="selectValue"
+            ></nx-multi-select>
+          </nx-formfield>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
