@@ -1,26 +1,36 @@
-<div nxRow *ngIf="artworks.length > 0">
+<div nxRow *ngIf="artworks.length > 0" nxRowAlignItems="stretch">
   <div
     nxCol="12,12,6,3"
     class="docs-grid-colored-col nx-margin-bottom-m artwork-item-col"
     *ngFor="let artwork of artworks"
   >
     <nx-card class="artwork-item">
-      <figure nxFigure class="nx-margin-bottom-s">
+      <figure nxFigure="1by1" class="nx-margin-bottom-s">
         <img
+          *ngIf="artwork.image_id && artwork.image_id.trim().length > 0; else defaultImage"
           src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
           alt="An eagle sitting on a branch and thinking. Photo made by Adli Wahid"
           width="100%"
-          height="auto"
+          height="250px"
         />
+        <ng-template #defaultImage>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/3/32/Art_Institute_of_Chicago_logo.svg"
+            alt="An eagle sitting on a branch and thinking. Photo made by Adli Wahid"
+            width="100%"
+            height="auto"
+          />
+        </ng-template>
       </figure>
       <h3 nxHeadline="subsection-small" class="">{{ artwork.title || '' }}</h3>
       <p nxHeadline="subsection-xsmall" class="nx-margin-bottom-s">{{ artwork.artist_title || '' }}</p>
       <p>
-        {{ artwork.place_of_origin }}
-        <span *ngIf="artwork.date_start === artwork.date_end; else diffDate">({{ artwork.date_start }})</span
+        {{ artwork.place_of_origin }} (<span>{{ checkDateMatches(artwork.date_start, artwork.date_end) }}</span
+        >)
+        <!-- <span *ngIf="artwork.date_start === artwork.date_end; else diffDate">({{ artwork.date_start }})</span
         ><ng-template #diffDate
           ><span>({{ artwork.date_start }} - {{ artwork.date_end }})</span></ng-template
-        >
+        > -->
       </p>
       <p>Grant print</p>
     </nx-card>

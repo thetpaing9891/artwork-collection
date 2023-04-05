@@ -1,11 +1,15 @@
 <app-header></app-header>
 <main>
   <section>
-    <app-filter></app-filter>
+    <app-filter
+      [style_titles]="style_titles"
+      (filterDataEvent)="filterByStyle($event)"
+      (sortDataEvent)="filterBySort($event)"
+    ></app-filter>
     <div nxLayout="grid" class="nx-grid--max-width">
-      <app-artwork [artworks]="artWorkList"></app-artwork>
+      <app-artwork [artworks]="filteredData"></app-artwork>
     </div>
   </section>
-  <app-pagination></app-pagination>
+  <app-pagination [pagination]="paginationObjs"></app-pagination>
   <!-- <app-overlay></app-overlay> -->
 </main>

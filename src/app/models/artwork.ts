@@ -1,12 +1,13 @@
+export interface Pagination {
+  total: number;
+  limit: number;
+  offset: number;
+  total_pages: number;
+  current_page: number;
+  next_url: string;
+}
 interface Meta {
-  pagination: {
-    total: number;
-    limit: number;
-    offset: number;
-    total_pages: number;
-    current_page: number;
-    next_url: string;
-  };
+  pagination: Pagination;
   info: {
     license_text: string;
     license_links: string[];
@@ -29,7 +30,7 @@ export interface ArtWork {
   id: number;
   title: string;
   thumbnail: Thumbnail;
-  image_id: string;
+  image_id: string | null | undefined;
   date_start: number;
   date_end: number;
   place_of_origin: string;

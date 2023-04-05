@@ -1,0 +1,14 @@
+.artwork-item-col {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  display: flex;
+  align-items: stretch;
+}
+.artwork-item {
+  width: 100%;
+  padding: 15px;
+
+  img {
+    object-fit: cover;
+  }
+}

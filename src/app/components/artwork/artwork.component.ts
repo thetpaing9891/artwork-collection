@@ -10,4 +10,11 @@ export class ArtworkComponent implements OnInit {
   @Input() artworks: ArtWork[] = [];
 
   ngOnInit(): void {}
+
+  checkDateMatches(start: number, end: number) {
+    if (start === end) {
+      return start;
+    }
+    return `${start} - ${end}`;
+  }
 }

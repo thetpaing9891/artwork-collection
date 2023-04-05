@@ -88,7 +88,7 @@ export class ArtworkService {
         artist_title: 'Guido Cadorin',
         style_titles: ['Modernism', 'Art Deco'],
         material_titles: ['cotton (textile)', 'silk (textile)'],
-        image_id: '66b45fe2-8ffa-f6e4-3884-092ac31c758a',
+        image_id: '',
       },
       {
         id: 215631,
@@ -213,7 +213,7 @@ export class ArtworkService {
   constructor() {}
 
   getArtWorks() {
-    return this.artWorks.data;
+    return this.artWorks;
     // const apiUrl = 'https://api.artic.edu/api/v1/artworks';
     // return this.http.get<ArtworkResponse>(apiUrl).pipe(map((response: ArtworkResponse) => response.data));
   }

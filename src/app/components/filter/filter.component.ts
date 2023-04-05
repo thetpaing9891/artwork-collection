@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ArtWork } from 'src/app/models/artwork';
 
-interface MyOption {
+interface Props {
   name: string;
-  id: number;
+  value: string;
 }
 
 @Component({
@@ -10,33 +11,49 @@ interface MyOption {
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
 })
-export class FilterComponent {
-  options: string[] = ['Apple', 'Orange', 'Plum', 'Cherry'];
+export class FilterComponent implements OnInit, DoCheck {
+  @Output() filterDataEvent = new EventEmitter<string[]>();
+  @Output() sortDataEvent = new EventEmitter<string>();
 
-  complexOptions: MyOption[] = [
+  @Input() style_titles: Props[] = [];
+
+  sortData = [
     {
-      name: 'Apple',
-      id: 1,
+      name: 'Name',
+      value: 'title',
     },
     {
-      name: 'Orange',
-      id: 2,
+      name: 'Artist',
+      value: 'artist_title',
     },
     {
-      name: 'Plum',
-      id: 3,
-    },
-    {
-      name: 'Cherry',
-      id: 4,
+      name: 'Date',
+      value: 'date_start',
     },
   ];
 
-  selectLabel(option: MyOption): string {
+  modelStyleTitles: string[] = [];
+  modelSort: string = '';
+
+  ngOnInit(): void {}
+
+  ngDoCheck(): void {
+    this.filterDataEvent.emit(this.modelStyleTitles);
+    const value = this.sortData.find((v) => {
+      if (v.name === this.modelSort) {
+        return v;
+      }
+      return;
+    }) as Props;
+    console.log('Value', value && value.value);
+    if (value) this.sortDataEvent.emit(value.value);
+  }
+
+  selectLabel(option: Props): string {
     return option.name;
   }
 
-  selectValue(option: MyOption): number {
-    return option.id;
+  selectValue(option: Props): string {
+    return option.value;
   }
 }
