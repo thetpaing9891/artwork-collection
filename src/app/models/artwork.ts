@@ -1,3 +1,9 @@
+export interface ReqParams {
+  limit: number;
+  page: number;
+  fields?: string;
+}
+
 export interface Pagination {
   total: number;
   limit: number;

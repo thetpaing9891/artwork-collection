@@ -6,14 +6,10 @@ import { Component, DoCheck, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, DoCheck {
-  title: string = '';
+  title: string = 'Artwork Collection';
   constructor() {}
 
-  ngDoCheck(): void {
-    console.log('ng Do check');
-  }
+  ngDoCheck(): void {}
 
-  ngOnInit(): void {
-    console.log('ng Do check');
-  }
+  ngOnInit(): void {}
 }

@@ -9,14 +9,12 @@
         <img
           *ngIf="artwork.image_id && artwork.image_id.trim().length > 0; else defaultImage"
           src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
-          alt="An eagle sitting on a branch and thinking. Photo made by Adli Wahid"
           width="100%"
           height="250px"
         />
         <ng-template #defaultImage>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/3/32/Art_Institute_of_Chicago_logo.svg"
-            alt="An eagle sitting on a branch and thinking. Photo made by Adli Wahid"
             width="100%"
             height="auto"
           />
@@ -27,12 +25,8 @@
       <p>
         {{ artwork.place_of_origin }} (<span>{{ checkDateMatches(artwork.date_start, artwork.date_end) }}</span
         >)
-        <!-- <span *ngIf="artwork.date_start === artwork.date_end; else diffDate">({{ artwork.date_start }})</span
-        ><ng-template #diffDate
-          ><span>({{ artwork.date_start }} - {{ artwork.date_end }})</span></ng-template
-        > -->
       </p>
-      <p>Grant print</p>
+      <p>{{ artwork.material_titles.toString() || '' | titlecase }}</p>
     </nx-card>
   </div>
 </div>

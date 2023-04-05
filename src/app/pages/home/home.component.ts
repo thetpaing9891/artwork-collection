@@ -3,6 +3,8 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ArtWork, ArtworkResponse, Pagination } from 'src/app/models/artwork';
 import { ArtworkService } from 'src/app/services/artwork.service';
 import { sortBy } from 'lodash';
+import { catchError, throwError } from 'rxjs';
+import { getFilterData, getStyleTitles, stopLoading } from 'src/app/utils';
 
 interface Props {
   name: string;
@@ -13,85 +15,95 @@ interface Props {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  providers: [ArtworkService],
 })
 export class HomeComponent implements OnInit, DoCheck, AfterViewInit {
   @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
 
-  // artWorkService = new ArtworkService();
-
   artWorkList: ArtWork[] = [];
-  filteredData: ArtWork[] = [];
-  paginationObjs = Object() as Pagination;
-  style_titles: Props[] = [];
+  filterArtWorkList: ArtWork[] = [];
 
-  selectedStyleTitles: string[] = [];
-  selectedSorted: string = '';
+  paginationObj = Object() as Pagination;
+  styleTitlesList: Props[] = [];
+
+  // API error
+  errorMessage: string | undefined;
+
+  // Pagination params
+  page: number = 1;
+  limit: number = 8;
+
+  // Loading state
+  isLoading: boolean = false;
+
+  // This is style titles dropdown name
+  styleTitles: string[] = [];
+  sorted: string = '';
 
   constructor(private artWorkService: ArtworkService) {}
 
+  $artWork = this.artWorkService.getArtWorks({ page: this.page, limit: this.limit }).pipe();
+
   ngOnInit(): void {
-    const artWorks = this.artWorkService.getArtWorks();
-    this.artWorkList = artWorks.data;
-    this.filteredData = artWorks.data;
-    this.paginationObjs = artWorks.pagination;
-    this.style_titles = this.getStyletitles(artWorks.data);
+    this.getArtWorks();
   }
 
   ngDoCheck(): void {
-    if (this.selectedStyleTitles.length > 0) {
-      const filterData = this.artWorkList.filter((v: ArtWork) => {
-        const data = v.style_titles.filter((a) => this.selectedStyleTitles.includes(a));
-        if (data.length > 0) return data;
-        return;
-      });
-      this.filteredData =
-        this.selectedSorted.length > 0
-          ? (sortBy(Object.values(filterData), [this.selectedSorted]) as ArtWork[])
-          : filterData;
+    // check form changes
+    if (this.styleTitles.length > 0) {
+      const filterData = getFilterData(this.artWorkList, this.styleTitles);
+      this.filterArtWorkList =
+        this.sorted.length > 0 ? (sortBy(Object.values(filterData), [this.sorted]) as ArtWork[]) : filterData;
     } else {
-      this.filteredData = this.artWorkList;
+      this.filterArtWorkList = this.artWorkList;
     }
 
-    if (this.selectedSorted.length > 0) {
-      const currentData = this.selectedStyleTitles.length > 0 ? this.filteredData : this.artWorkList;
-      const filterData = sortBy(Object.values(currentData), [this.selectedSorted]) as ArtWork[];
-      this.filteredData = filterData;
+    // check sorting
+    if (this.sorted.length > 0) {
+      const currentData = this.styleTitles.length > 0 ? this.filterArtWorkList : this.artWorkList;
+      const filterData = sortBy(Object.values(currentData), [this.sorted]) as ArtWork[];
+      this.filterArtWorkList = filterData;
     }
+  }
+
+  getArtWorks(): void {
+    this.isLoading = true;
+    this.artWorkService
+      .getArtWorks({ page: this.page, limit: this.limit })
+      .pipe(
+        catchError((error) => {
+          console.error(error);
+          this.errorMessage = 'An error occurred. Please try again later.';
+          this.isLoading = stopLoading() as unknown as boolean;
+          return throwError(error);
+        })
+      )
+      .subscribe((res) => {
+        if (res) {
+          this.artWorkList = res.data;
+          this.filterArtWorkList = res.data;
+          this.paginationObj = res.pagination;
+          this.styleTitlesList = getStyleTitles(res.data);
+        }
+        this.isLoading = stopLoading() as unknown as boolean;
+      });
   }
 
   ngAfterViewInit() {
-    this.headerComponent.title = 'Artwork Collection';
+    // this.headerComponent.title = 'Artwork Collection';
   }
 
   filterByStyle(names: string[]) {
-    this.selectedStyleTitles = names;
+    this.styleTitles = names;
   }
 
   filterBySort(v: string) {
-    this.selectedSorted = v;
+    this.sorted = v;
   }
 
-  getStyletitles(data: ArtWork[]) {
-    const arrObj: string[] = [];
-    data.map((v: ArtWork) => {
-      if (v.style_titles.length > 0) {
-        const str = v.style_titles.toString();
-        const arr = str.split(',');
-        if (arr.length > 1) {
-          arr.map((d: string) => arrObj.push(d));
-        } else {
-          arrObj.push(str);
-        }
-      }
-    });
-    const uniqueElements = [...new Set(arrObj)];
-    return uniqueElements.map((element) => {
-      const c = arrObj.filter((el) => el === element).length;
-      const obj = {
-        value: element,
-        name: `${element} (${c})`,
-      };
-      return obj;
-    });
+  onChangePager(page: number) {
+    this.page = page;
+    this.styleTitles = [];
+    this.getArtWorks();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Pagination } from 'src/app/models/artwork';
 
 @Component({
@@ -8,10 +8,9 @@ import { Pagination } from 'src/app/models/artwork';
 })
 export class PaginationComponent implements OnInit, OnChanges {
   @Input() pagination = Object() as Pagination;
+  @Output() currentPage = new EventEmitter<number>();
 
-  ngOnInit(): void {
-    console.log('');
-  }
+  ngOnInit(): void {}
 
   count = this.pagination.total_pages;
   page = this.pagination.current_page;
@@ -25,13 +24,16 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   prevPage() {
     this.page--;
+    this.currentPage.emit(this.page);
   }
 
   nextPage() {
     this.page++;
+    this.currentPage.emit(this.page);
   }
 
   goToPage(n: number) {
     this.page = n;
+    this.currentPage.emit(this.page);
   }
 }

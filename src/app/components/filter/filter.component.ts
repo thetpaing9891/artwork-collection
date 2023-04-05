@@ -12,10 +12,11 @@ interface Props {
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit, DoCheck {
-  @Output() filterDataEvent = new EventEmitter<string[]>();
-  @Output() sortDataEvent = new EventEmitter<string>();
+  @Output() styleTitlesEvent = new EventEmitter<string[]>();
+  @Output() sortedEvent = new EventEmitter<string>();
 
-  @Input() style_titles: Props[] = [];
+  @Input() styleTitlesList: Props[] = [];
+  @Input() styleTitles: string[] = [];
 
   sortData = [
     {
@@ -32,21 +33,19 @@ export class FilterComponent implements OnInit, DoCheck {
     },
   ];
 
-  modelStyleTitles: string[] = [];
   modelSort: string = '';
 
   ngOnInit(): void {}
 
   ngDoCheck(): void {
-    this.filterDataEvent.emit(this.modelStyleTitles);
+    this.styleTitlesEvent.emit(this.styleTitles);
     const value = this.sortData.find((v) => {
       if (v.name === this.modelSort) {
         return v;
       }
       return;
     }) as Props;
-    console.log('Value', value && value.value);
-    if (value) this.sortDataEvent.emit(value.value);
+    if (value) this.sortedEvent.emit(value.value);
   }
 
   selectLabel(option: Props): string {

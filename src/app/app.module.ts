@@ -19,6 +19,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { ArtworkComponent } from './components/artwork/artwork.component';
+import { APP_CONFIG, APP_SERVICE_CONFIG } from './config/appconfig.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,12 @@ import { ArtworkComponent } from './components/artwork/artwork.component';
     NxSpinnerModule,
     NxDropdownModule,
     NxFormfieldModule,
+  ],
+  providers: [
+    {
+      provide: APP_SERVICE_CONFIG,
+      useValue: APP_CONFIG,
+    },
   ],
   bootstrap: [AppComponent],
 })
