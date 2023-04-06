@@ -1,7 +1,7 @@
 # ArtworkCollection
 
-This application was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4, you can find documentation and help at there.
-You can check demo in here - [https://artwork-collection.netlify.app](https://artwork-collection.netlify.app)
+This application was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4, you can find documentation in this website.
+YAnd you can also check the application here - [https://artwork-collection.netlify.app](https://artwork-collection.netlify.app)
 
 ## Setting up
 
