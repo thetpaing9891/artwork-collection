@@ -43,8 +43,16 @@ export interface ArtWork {
   artist_title: string | null;
   style_titles: string[];
   material_titles: string[];
+  dimensions?: string;
+  credit_line?: string;
+  artist_display?: string;
+  date_display?: string;
 }
 
 export type ArtworkResponse = Meta & {
   data: ArtWork[];
+};
+
+export type DetailResponse = Meta & {
+  data: ArtWork;
 };

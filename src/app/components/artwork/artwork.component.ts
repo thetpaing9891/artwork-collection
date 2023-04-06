@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { ArtWork } from 'src/app/models/artwork';
 
 @Component({
@@ -9,6 +10,8 @@ import { ArtWork } from 'src/app/models/artwork';
 export class ArtworkComponent implements OnInit {
   @Input() artworks: ArtWork[] = [];
 
+  constructor(private route: Router) {}
+
   ngOnInit(): void {}
 
   checkDateMatches(start: number, end: number) {
@@ -16,5 +19,9 @@ export class ArtworkComponent implements OnInit {
       return start;
     }
     return `${start} - ${end}`;
+  }
+
+  goDetail(id: number) {
+    this.route.navigateByUrl(`/detail/${id}`);
   }
 }

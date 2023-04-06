@@ -4,7 +4,7 @@
     class="docs-grid-colored-col nx-margin-bottom-m artwork-item-col"
     *ngFor="let artwork of artworks"
   >
-    <nx-card class="artwork-item">
+    <nx-card class="artwork-item" (click)="goDetail(artwork.id)">
       <figure nxFigure="1by1" class="nx-margin-bottom-s">
         <img
           *ngIf="artwork.image_id && artwork.image_id.trim().length > 0; else defaultImage"

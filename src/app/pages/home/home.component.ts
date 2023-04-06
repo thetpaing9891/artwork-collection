@@ -18,7 +18,7 @@ interface Props {
   providers: [ArtworkService],
 })
 export class HomeComponent implements OnInit, DoCheck, AfterViewInit {
-  @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
+  // @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
 
   artWorkList: ArtWork[] = [];
   filterArtWorkList: ArtWork[] = [];
@@ -41,8 +41,6 @@ export class HomeComponent implements OnInit, DoCheck, AfterViewInit {
   sorted: string = '';
 
   constructor(private artWorkService: ArtworkService) {}
-
-  $artWork = this.artWorkService.getArtWorks({ page: this.page, limit: this.limit }).pipe();
 
   ngOnInit(): void {
     this.getArtWorks();

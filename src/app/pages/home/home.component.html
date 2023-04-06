@@ -1,21 +1,23 @@
-<app-header></app-header>
-<main>
-  <section>
-    <app-filter
-      *ngIf="filterArtWorkList && filterArtWorkList.length > 0"
-      [styleTitles]="styleTitles"
-      [styleTitlesList]="styleTitlesList"
-      (styleTitlesEvent)="filterByStyle($event)"
-      (sortedEvent)="filterBySort($event)"
-    ></app-filter>
-    <div nxLayout="grid" class="nx-grid--max-width">
-      <app-artwork
-        [artworks]="filterArtWorkList"
+<div>
+  <app-header></app-header>
+  <main>
+    <section>
+      <app-filter
         *ngIf="filterArtWorkList && filterArtWorkList.length > 0"
-      ></app-artwork>
-      <nx-error class="nx-margin-bottom-m" *ngIf="errorMessage"> {{ errorMessage }} </nx-error>
-    </div>
-  </section>
-  <app-pagination [pagination]="paginationObj" (currentPage)="onChangePager($event)"></app-pagination>
-  <app-overlay *ngIf="isLoading"></app-overlay>
-</main>
+        [styleTitles]="styleTitles"
+        [styleTitlesList]="styleTitlesList"
+        (styleTitlesEvent)="filterByStyle($event)"
+        (sortedEvent)="filterBySort($event)"
+      ></app-filter>
+      <div nxLayout="grid" class="nx-grid--max-width">
+        <app-artwork
+          [artworks]="filterArtWorkList"
+          *ngIf="filterArtWorkList && filterArtWorkList.length > 0"
+        ></app-artwork>
+        <nx-error class="nx-margin-bottom-m" *ngIf="errorMessage"> {{ errorMessage }} </nx-error>
+      </div>
+    </section>
+    <app-pagination [pagination]="paginationObj" (currentPage)="onChangePager($event)"></app-pagination>
+    <app-overlay *ngIf="isLoading"></app-overlay>
+  </main>
+</div>

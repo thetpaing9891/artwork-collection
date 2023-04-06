@@ -20,6 +20,10 @@ import { OverlayComponent } from './components/overlay/overlay.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { ArtworkComponent } from './components/artwork/artwork.component';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './config/appconfig.service';
+import { DetailComponent } from './pages/detail/detail.component';
+import { NxLinkModule } from '@aposin/ng-aquila/link';
+import { AppRoutingModule } from './app-routing.module';
+import { PagenotfoundComponent } from './pages/pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,8 @@ import { APP_CONFIG, APP_SERVICE_CONFIG } from './config/appconfig.service';
     OverlayComponent,
     FilterComponent,
     ArtworkComponent,
+    DetailComponent,
+    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,8 @@ import { APP_CONFIG, APP_SERVICE_CONFIG } from './config/appconfig.service';
     NxSpinnerModule,
     NxDropdownModule,
     NxFormfieldModule,
+    NxLinkModule,
+    AppRoutingModule,
   ],
   providers: [
     {

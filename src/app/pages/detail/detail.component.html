@@ -1,0 +1,56 @@
+<div>
+  <app-header></app-header>
+  <main>
+    <section>
+      <div nxLayout="grid" class="nx-grid--max-width">
+        <div nxRow nxRowAlignItems="stretch">
+          <div nxCol="12,12" class="docs-grid-colored-col nx-margin-bottom-m artwork-item-col" *ngIf="artWorkDetail">
+            <nx-card class="artwork-item">
+              <div nxRow nxRowAlignItems="stretch">
+                <div nxCol="12,12,6,6" class="docs-grid-colored-col nx-margin-bottom-m artwork-item-col">
+                  <figure nxFigure="1by1" class="nx-margin-bottom-s">
+                    <img
+                      *ngIf="artWorkDetail.image_id; else defaultImage"
+                      src="https://www.artic.edu/iiif/2/{{ artWorkDetail.image_id }}/full/843,/0/default.jpg"
+                      width="100%"
+                      height="auto"
+                    />
+                    <ng-template #defaultImage>
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/3/32/Art_Institute_of_Chicago_logo.svg"
+                        width="100%"
+                        height="auto"
+                      />
+                    </ng-template>
+                  </figure>
+                </div>
+                <div nxCol="12,12,6,6" class="docs-grid-colored-col nx-margin-bottom-m artwork-item-col">
+                  <h3 nxHeadline="subsection-medium" class="nx-margin-bottom-m">{{ artWorkDetail.title || '' }}</h3>
+                  <p nxHeadline="subsection-small" class="nx-margin-bottom-s">
+                    {{ artWorkDetail.artist_display }}
+                  </p>
+                  <p nxHeadline="subsection-xsmall" class="">
+                    {{ artWorkDetail.place_of_origin }}
+                  </p>
+                  <p nxHeadline="subsection-xsmall" class="nx-margin-bottom-s">
+                    {{ artWorkDetail.date_display }}
+                  </p>
+                  <p nxHeadline="subsection-xsmall" class="">
+                    {{ artWorkDetail.dimensions }}
+                  </p>
+                  <p nxHeadline="subsection-xsmall" class="nx-margin-bottom-s">
+                    {{ artWorkDetail.material_titles.toString() || '' | titlecase }}
+                  </p>
+                  <p nxHeadline="subsection-xsmall" class="nx-margin-bottom-s">
+                    {{ artWorkDetail.credit_line }}
+                  </p>
+                </div>
+              </div>
+            </nx-card>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <app-overlay *ngIf="isLoading"></app-overlay>
+</div>

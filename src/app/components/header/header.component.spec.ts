@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NxFormfieldModule } from '@aposin/ng-aquila/formfield';
 
 import { HeaderComponent } from './header.component';
 
@@ -18,6 +17,12 @@ describe('HeaderComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(HeaderComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it('check the site name in header comp', () => {
+    expect(component.title).toEqual('Artwork Collection');
   });
 });

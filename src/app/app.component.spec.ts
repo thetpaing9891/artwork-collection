@@ -1,5 +1,5 @@
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +20,15 @@ import { NxOverlayModule } from '@aposin/ng-aquila/overlay';
 import { NxPopoverModule } from '@aposin/ng-aquila/popover';
 
 import { AppComponent } from './app.component';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+
+const fakeActivatedRoute = {
+  snapshot: { data: {} },
+} as ActivatedRoute;
+
+let component: AppComponent;
+let fixture: ComponentFixture<AppComponent>;
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -47,26 +56,19 @@ describe('AppComponent', () => {
         NxModalModule,
         NxOverlayModule,
         NxPopoverModule,
+        RouterTestingModule,
       ],
+      providers: [{ provide: ActivatedRoute, useValue: fakeActivatedRoute }],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should create the form`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1.nx-heading--section').textContent).toContain('Aquila Insurance App');
+  });
+
+  it('should create app', () => {
+    expect(component).toBeTruthy();
   });
 });
