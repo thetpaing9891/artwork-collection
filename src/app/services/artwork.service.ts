@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ArtworkResponse, DetailResponse, ReqParams } from '../models/artwork';
 import { APP_SERVICE_CONFIG } from '../config/appconfig.service';
 import { AppConfig } from '../models';

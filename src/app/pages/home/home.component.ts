@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, DoCheck, OnInit, ViewChild } from '@angular/core';
-import { HeaderComponent } from 'src/app/components/header/header.component';
-import { ArtWork, ArtworkResponse, Pagination } from 'src/app/models/artwork';
+import { AfterContentChecked, ChangeDetectorRef, Component, DoCheck, OnInit } from '@angular/core';
+import { ArtWork, Pagination } from 'src/app/models/artwork';
 import { ArtworkService } from 'src/app/services/artwork.service';
 import { sortBy } from 'lodash';
 import { catchError, throwError } from 'rxjs';
@@ -17,9 +16,7 @@ interface Props {
   styleUrls: ['./home.component.scss'],
   providers: [ArtworkService],
 })
-export class HomeComponent implements OnInit, DoCheck, AfterViewInit {
-  // @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
-
+export class HomeComponent implements OnInit, AfterContentChecked, DoCheck {
   artWorkList: ArtWork[] = [];
   filterArtWorkList: ArtWork[] = [];
 
@@ -40,14 +37,16 @@ export class HomeComponent implements OnInit, DoCheck, AfterViewInit {
   styleTitles: string[] = [];
   sorted: string = '';
 
-  constructor(private artWorkService: ArtworkService) {}
+  constructor(private artWorkService: ArtworkService, private changeDetector: ChangeDetectorRef) {}
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
 
   ngOnInit(): void {
     this.getArtWorks();
   }
 
   ngDoCheck(): void {
-    // check form changes
     if (this.styleTitles.length > 0) {
       const filterData = getFilterData(this.artWorkList, this.styleTitles);
       this.filterArtWorkList =
@@ -85,10 +84,6 @@ export class HomeComponent implements OnInit, DoCheck, AfterViewInit {
         }
         this.isLoading = stopLoading() as unknown as boolean;
       });
-  }
-
-  ngAfterViewInit() {
-    // this.headerComponent.title = 'Artwork Collection';
   }
 
   filterByStyle(names: string[]) {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Pagination } from 'src/app/models/artwork';
 
 @Component({
@@ -6,11 +6,9 @@ import { Pagination } from 'src/app/models/artwork';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })
-export class PaginationComponent implements OnInit, OnChanges {
+export class PaginationComponent implements OnChanges {
   @Input() pagination = Object() as Pagination;
   @Output() currentPage = new EventEmitter<number>();
-
-  ngOnInit(): void {}
 
   count = this.pagination.total_pages;
   page = this.pagination.current_page;

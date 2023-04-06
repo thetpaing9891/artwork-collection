@@ -1,15 +1,11 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, DoCheck {
+export class HeaderComponent {
   title: string = 'Artwork Collection';
   constructor() {}
-
-  ngDoCheck(): void {}
-
-  ngOnInit(): void {}
 }

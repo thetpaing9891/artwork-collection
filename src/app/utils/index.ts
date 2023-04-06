@@ -13,7 +13,9 @@ export const getStyleTitles = (data: ArtWork[]) => {
       }
     }
   });
+
   const uniqueElements = [...new Set(arrObj)];
+
   return uniqueElements.map((element) => {
     const c = arrObj.filter((el) => el === element).length;
     const obj = {
@@ -22,6 +24,13 @@ export const getStyleTitles = (data: ArtWork[]) => {
     };
     return obj;
   });
+};
+
+export const checkDateMatches = (start: number, end: number) => {
+  if (start === end) {
+    return start;
+  }
+  return `${start} - ${end}`;
 };
 
 export const getFilterData = (data: ArtWork[], values: string[]) => {

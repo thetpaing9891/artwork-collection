@@ -1,6 +1,4 @@
-import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ArtWork } from 'src/app/models/artwork';
-
+import { Component, DoCheck, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 interface Props {
   name: string;
   value: string;
@@ -11,7 +9,7 @@ interface Props {
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
 })
-export class FilterComponent implements OnInit, DoCheck {
+export class FilterComponent implements DoCheck {
   @Output() styleTitlesEvent = new EventEmitter<string[]>();
   @Output() sortedEvent = new EventEmitter<string>();
 
@@ -34,8 +32,6 @@ export class FilterComponent implements OnInit, DoCheck {
   ];
 
   modelSort: string = '';
-
-  ngOnInit(): void {}
 
   ngDoCheck(): void {
     this.styleTitlesEvent.emit(this.styleTitles);
